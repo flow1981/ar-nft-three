@@ -1,8 +1,11 @@
 import { createSphere } from './resources/sphere.js'
 
+const nftMarkerSource = '../resources/dataNFT/pinball'
+const cameraParamSource = '../resources/data/camera_para.dat'
+
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: '../resources/data/camera_para.dat',
+	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: cameraParamSource,
 	onSuccess: function(arScene, arController, arCamera) {
 
 		document.body.className = arController.orientation;
@@ -37,10 +40,13 @@ window.ARThreeOnLoad = function() {
 		let sphere = createSphere()
 
 		// Create NFT marker and associate Three.js models with it
-		arController.loadNFTMarker('../resources/dataNFT/pinball', function(markerId) {
+		arController.loadNFTMarker(nftMarkerSource, function(markerId) {
 			let markerRoot = arController.createThreeNFTMarker(markerId);
-			markerRoot.add(sphere);
 			arScene.scene.add(markerRoot);
+
+			//Associate Three.js models with NFT marker
+			markerRoot.add(sphere);
+
 		});
 
 		var rotationV = 0;
