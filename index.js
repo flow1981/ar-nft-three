@@ -43,24 +43,9 @@ window.ARThreeOnLoad = function() {
 		sphere.position.y = 80;
 		sphere.scale.set(80,80,80);
 
-		var torus = new THREE.Mesh(
-			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-
-		torus.material.shading = THREE.FlatShading;
-		torus.position.z = 0.5;
-		torus.rotation.x = Math.PI/2;
-
 		arController.loadNFTMarker('../resources/dataNFT/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			markerRoot.add(sphere);
-			arScene.scene.add(markerRoot);
-		});
-
-		arController.loadMarker('../resources/data/patt.kanji', function(markerId) {
-			var markerRoot = arController.createThreeMarker(markerId);
-			markerRoot.add(torus);
 			arScene.scene.add(markerRoot);
 		});
 
