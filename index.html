@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>NFT marker example with Three.js</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<style>
+html,body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+	overflow-x: hidden;
+}
+.portrait canvas {
+	transform-origin: 0 0;
+	transform: rotate(-90deg) translateX(-100%);
+}
+.desktop canvas {
+ 	transform: scale(-1, 1);
+}
+</style>
+</head>
+<body>
+
+<h1>NFT marker example with Three.js</h1>
+<p>On Chrome on Android, tap the screen to start playing video stream.</p>
+<p>Show  <a href="https://github.com/artoolkit/artoolkit5/blob/master/doc/Marker%20images/pinball.jpg">Pinball image</a> to camera to display a colorful object on top of it. Tap the screen to rotate the object.
+
+<script src="./resources/jsartoolkit5/standard/artoolkit.min.js"></script>
+<script src="./resources/three/three.js"></script>
+<script src="./resources/jsartoolkit5/artoolkit/artoolkit.three.js"></script>
+
+<script type=module src="./index.js"></script>
+
+</body>
+</html>
