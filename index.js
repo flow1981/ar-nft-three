@@ -7,12 +7,14 @@ window.ARThreeOnLoad = function() {
 
 		document.body.className = arController.orientation;
 
-		var renderer = new THREE.WebGLRenderer({antialias: true});
+		// Set up renderer
+		let renderer = new THREE.WebGLRenderer({antialias: true});
 		renderer.gammaOutput = true;
 		renderer.gammaFactor = 2.2;
+
 		if (arController.orientation === 'portrait') {
-			var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
-			var h = window.innerWidth;
+			let w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
+			let h = window.innerWidth;
 			renderer.setSize(w, h);
 			renderer.domElement.style.paddingBottom = (w-h) + 'px';
 		} else {
@@ -26,23 +28,25 @@ window.ARThreeOnLoad = function() {
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
 
-		var rotationV = 0;
-		var rotationTarget = 0;
-
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
 
-		var sphere = createSphere()
+		// Add Three.js models
+		let sphere = createSphere()
 
+		// Create NFT marker and associate Three.js models with it
 		arController.loadNFTMarker('../resources/dataNFT/pinball', function(markerId) {
-			var markerRoot = arController.createThreeNFTMarker(markerId);
+			let markerRoot = arController.createThreeNFTMarker(markerId);
 			markerRoot.add(sphere);
 			arScene.scene.add(markerRoot);
 		});
 
-		var tick = function() {
+		var rotationV = 0;
+		var rotationTarget = 0;
+
+		const tick = function() {
 			arScene.process();
 			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
 			sphere.rotation.z += rotationV;
