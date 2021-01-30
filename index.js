@@ -1,4 +1,5 @@
-import { createEarthGnonomic } from './resources/three/models/earth.js'
+import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
+import { alignXeciToVernalEquinox } from './resources/helper/orientation.js'
 
 const nftMarkerSource = '../resources/dataNFT/pinball'
 const cameraParamSource = '../resources/data/camera_para.dat'
@@ -43,6 +44,7 @@ window.ARThreeOnLoad = function() {
 		sphere.position.x = 80;
 		sphere.position.y = 120;
 		sphere.scale.set(50,50,50);
+		sphere = alignXeciToVernalEquinox(sphere)
 
 		// Create NFT marker and associate Three.js models with it
 		arController.loadNFTMarker(nftMarkerSource, function(markerId) {
