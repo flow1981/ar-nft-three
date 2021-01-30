@@ -39,12 +39,18 @@ window.ARThreeOnLoad = function() {
 
 		// Add Three.js models
 		let sphere = createEarthGnonomic()
+		// z positive, towards viewer
+		// y positive, up
+		// x positive, left
+		// x, y zero is bottom right of trigger
 		sphere.material.flatShading;
-		sphere.position.z = 80;
-		sphere.position.x = 80;
-		sphere.position.y = 120;
+		sphere.position.z = 100; // towards viewer
+		sphere.position.x = 80; // positive left
+		sphere.position.y = 80; // positive up
 		sphere.scale.set(50,50,50);
-		sphere = alignXeciToVernalEquinox(sphere)
+
+		sphere.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 0 * Math.PI/180 );
+		// sphere = alignXeciToVernalEquinox(sphere)
 
 		// Create NFT marker and associate Three.js models with it
 		arController.loadNFTMarker(nftMarkerSource, function(markerId) {
