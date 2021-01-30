@@ -1,3 +1,5 @@
+import { createSphere } from './resources/sphere.js'
+
 window.ARThreeOnLoad = function() {
 
 	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: '../resources/data/camera_para.dat',
@@ -32,16 +34,7 @@ window.ARThreeOnLoad = function() {
 			rotationTarget += 1;
 		}, false);
 
-		var sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(0.5, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-
-		sphere.material.flatShading;
-		sphere.position.z = 40;
-		sphere.position.x = 80;
-		sphere.position.y = 80;
-		sphere.scale.set(80,80,80);
+		var sphere = createSphere()
 
 		arController.loadNFTMarker('../resources/dataNFT/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
