@@ -1,12 +1,15 @@
 import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
 import { alignXeciToVernalEquinox } from './resources/helper/orientation.js'
 
-const nftMarkerSource = '../resources/dataNFT/pinball'
-const cameraParamSource = '../resources/data/camera_para.dat'
+const NFT_MARKER_URL = '../resources/dataNFT/pinball'
+const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
+
+const TLE_URL =  'http://live.ariss.org/iss.txt'
+
 
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: cameraParamSource,
+	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: CAMERA_PARAM_URL,
 	onSuccess: function(arScene, arController, arCamera) {
 
 		document.body.className = arController.orientation;
@@ -53,7 +56,7 @@ window.ARThreeOnLoad = function() {
 		// sphere = alignXeciToVernalEquinox(sphere)
 
 		// Create NFT marker and associate Three.js models with it
-		arController.loadNFTMarker(nftMarkerSource, function(markerId) {
+		arController.loadNFTMarker(NFT_MARKER_URL, function(markerId) {
 			let markerRoot = arController.createThreeNFTMarker(markerId);
 			arScene.scene.add(markerRoot);
 
@@ -83,6 +86,23 @@ window.ARThreeOnLoad = function() {
 
 };
 
-if (window.ARController && ARController.getUserMediaThreeScene) {
-	ARThreeOnLoad();
-}
+//----
+
+//Avoid CORS when fetching TLE data
+$.ajaxPrefilter( function (options) {
+	if (options.crossDomain && jQuery.support.cors) {
+		var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+		options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+	}
+});
+
+//Fetch TLE data before starting the App
+$.get( TLE_URL, function( html ) {
+	const TLE = html.split("\n").splice(0,3);
+	console.log(TLE);
+
+	// Start App if ARController and User Mediaare available
+	if (window.ARController && ARController.getUserMediaThreeScene) {
+		ARThreeOnLoad(TLE);
+	}
+})
