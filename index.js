@@ -2,7 +2,7 @@ import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
 import { createIssPositionMarker, addIssModelToMarker } from './resources/threeJS/models/iss.js'
 import { initOrbitalPosition, updateOrbitalPostion, visualizeOrbit, alignXeciToVernalEquinox, alignISSrelativeEarthSurface} from './resources/helper/sat.js'
 
-const NFT_MARKER_URL = '../resources/dataNFT/pinball'
+const NFT_MARKER_URL = '../resources/dataNFT/earth-qr'
 const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
 
 const TLE_URL =  'http://live.ariss.org/iss.txt'
