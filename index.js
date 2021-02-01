@@ -1,5 +1,6 @@
 import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
-import { alignXeciToVernalEquinox } from './resources/helper/orientation.js'
+import { createIssPositionMarker, addIssModelToMarker } from './resources/threeJS/models/iss.js'
+import { initOrbitalPosition, updateOrbitalPostion, visualizeOrbit } from './resources/helper/sat.js'
 
 const NFT_MARKER_URL = '../resources/dataNFT/pinball'
 const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
@@ -7,12 +8,17 @@ const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
 const TLE_URL =  'http://live.ariss.org/iss.txt'
 
 
-window.ARThreeOnLoad = function() {
+window.ARThreeOnLoad = function(tle) {
 
 	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: CAMERA_PARAM_URL,
 	onSuccess: function(arScene, arController, arCamera) {
 
 		document.body.className = arController.orientation;
+
+		//Set up ambient light source
+		let ambientLight = new THREE.AmbientLight( 0xcccccc, 0.8 );
+		arScene.scene.add( ambientLight );
+
 
 		// Set up renderer
 		let renderer = new THREE.WebGLRenderer({antialias: true});
@@ -35,50 +41,58 @@ window.ARThreeOnLoad = function() {
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
 
-		renderer.domElement.addEventListener('click', function(ev) {
-			ev.preventDefault();
-			rotationTarget += 1;
-		}, false);
+		// renderer.domElement.addEventListener('click', function(ev) {
+		// 	ev.preventDefault();
+		// 	rotationTarget += 1;
+		// }, false);
+
+		let modelGroup = new THREE.Group();
+		// x positive - left, y positive - up, z positive -towards viewer | x, y zero is bottom right of trigger
+		modelGroup.applyMatrix(new THREE.Matrix4().makeScale(-1, 1, 1)); // we need flip the objects since ARtoolkit displays them mirrored
+		modelGroup.position.set(80,80,80)
+		modelGroup.scale.set(20,20,20);
 
 		// Add Three.js models
-		let sphere = createEarthGnonomic()
-		// z positive, towards viewer
-		// y positive, up
-		// x positive, left
-		// x, y zero is bottom right of trigger
-		sphere.material.flatShading;
-		sphere.position.z = 100; // towards viewer
-		sphere.position.x = 80; // positive left
-		sphere.position.y = 80; // positive up
-		sphere.scale.set(50,50,50);
+		let earth = createEarthGnonomic()
+		// earth.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 0 * Math.PI/180 );
+		// earth = alignXeciToVernalEquinox(sphere)
+		modelGroup.add(earth)	
+		
+		let issPosition = createIssPositionMarker()
+		issPosition.scale.set(20,20,20);
+		// issPosition = initOrbitalPosition(issPosition, tle, 0, 1)
+		// issPosition = updateOrbitalPostion(issPosition, 1)
+		modelGroup.add(issPosition)
+		
+		// let orbit = visualizeOrbit(issPosition.userData.satrec, 1)	
+		// modelGroup.add(orbit)
 
-		sphere.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 0 * Math.PI/180 );
-		// sphere = alignXeciToVernalEquinox(sphere)
+		// addIssModelToMarker(issPosition)
 
-		// Create NFT marker and associate Three.js models with it
+
+
+		// Create NFT marker and associate it with Three.js model group
 		arController.loadNFTMarker(NFT_MARKER_URL, function(markerId) {
 			let markerRoot = arController.createThreeNFTMarker(markerId);
+
 			arScene.scene.add(markerRoot);
-
-			//Associate Three.js models with NFT marker
-			markerRoot.add(sphere);
-
+			markerRoot.add(modelGroup); //Link models with NFT marker
 		});
 
-		var rotationV = 0;
-		var rotationTarget = 0;
+		// var rotationV = 0;
+		// var rotationTarget = 0;
 
-		const tick = function() {
+		const animate = function() {
 			arScene.process();
-			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
-			sphere.rotation.z += rotationV;
-			rotationV *= 0.8;
+			// rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
+			// sphere.rotation.z += rotationV;
+			// rotationV *= 0.8;
 
 			arScene.renderOn(renderer);
-			requestAnimationFrame(tick);
+			requestAnimationFrame(animate);
 		};
 
-		tick();
+		animate();
 
 	}});
 
