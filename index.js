@@ -1,12 +1,14 @@
 import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
 import { createIssPositionMarker, addIssModelToMarker } from './resources/threeJS/models/iss.js'
-import { initOrbitalPosition, updateOrbitalPostion, visualizeOrbit } from './resources/helper/sat.js'
+import { initOrbitalPosition, updateOrbitalPostion, visualizeOrbit, alignXeciToVernalEquinox, alignISSrelativeEarthSurface} from './resources/helper/sat.js'
 
 const NFT_MARKER_URL = '../resources/dataNFT/pinball'
 const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
 
 const TLE_URL =  'http://live.ariss.org/iss.txt'
 
+const scaleFactor = 1/100
+const earthRadius = 6371
 
 window.ARThreeOnLoad = function(tle) {
 
@@ -50,26 +52,25 @@ window.ARThreeOnLoad = function(tle) {
 		// x positive - left, y positive - up, z positive -towards viewer | x, y zero is bottom right of trigger
 		modelGroup.applyMatrix(new THREE.Matrix4().makeScale(-1, 1, 1)); // we need flip the objects since ARtoolkit displays them mirrored
 		modelGroup.position.set(80,80,80)
-		modelGroup.scale.set(20,20,20);
 
 		// Add Three.js models
-		let earth = createEarthGnonomic()
-		// earth.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 0 * Math.PI/180 );
-		// earth = alignXeciToVernalEquinox(sphere)
+		let earth = createEarthGnonomic(earthRadius, scaleFactor)
+		earth = alignXeciToVernalEquinox(earth)
 		modelGroup.add(earth)	
 		
 		let issPosition = createIssPositionMarker()
-		issPosition.scale.set(20,20,20);
-		// issPosition = initOrbitalPosition(issPosition, tle, 0, 1)
-		// issPosition = updateOrbitalPostion(issPosition, 1)
+		issPosition.scale.set(200,200,200);
+		issPosition = initOrbitalPosition(issPosition, tle, 0, scaleFactor)
+		issPosition = updateOrbitalPostion(issPosition, scaleFactor)
 		modelGroup.add(issPosition)
 		
-		// let orbit = visualizeOrbit(issPosition.userData.satrec, 1)	
-		// modelGroup.add(orbit)
+		let orbit = visualizeOrbit(issPosition.userData.satrec, scaleFactor)
+		modelGroup.add(orbit)
 
-		// addIssModelToMarker(issPosition)
+		addIssModelToMarker(issPosition)
+		alignISSrelativeEarthSurface(issPosition)
 
-
+		modelGroup.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 90 * Math.PI/180 );
 
 		// Create NFT marker and associate it with Three.js model group
 		arController.loadNFTMarker(NFT_MARKER_URL, function(markerId) {
