@@ -1,1 +1,11 @@
 .DS_Store
+
+/.vscode/
+
+# Ignore all terraform state directories
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
