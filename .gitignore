@@ -1,6 +1,13 @@
 .DS_Store
-
 /.vscode/
+
+# Ignore mac specific files
+*.DS_Store
+
+*/.vscode/
+*.vscode/
+
+# Ignore all terraform state directories
 
 # Local .terraform directories
 **/.terraform/*
@@ -8,3 +15,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Ignore dotenv files
+.env.local
+
