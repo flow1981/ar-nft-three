@@ -8,7 +8,6 @@
 *.vscode/
 
 # Ignore all terraform state directories
-
 # Local .terraform directories
 **/.terraform/*
 
@@ -18,4 +17,3 @@
 
 # Ignore dotenv files
 .env.local
-
