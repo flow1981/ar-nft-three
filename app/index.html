@@ -1,0 +1,94 @@
+<html>
+<head>
+	<title>NFT marker example with Three.js</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="slider.css" media="screen" />
+
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
+	<!-- include artoolkit and three.js-->
+	<script src="./resources/jsartoolkit5/standard/artoolkit.min.js"></script>
+	<script src="./resources/threeJS/three.js"></script>
+	<script src="./resources/jsartoolkit5/artoolkit/artoolkit.three.js"></script>
+
+	<!-- include jquery.js to fetch TLE data-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- include satellite.js to calculate sat positions-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/4.0.0/satellite.min.js"></script>
+
+	<script src="https://unpkg.com/three@0.87.1/examples/js/loaders/GLTFLoader.js"></script>
+
+</head>
+<body>
+	<div id="slideout_left">
+		<div class="tab_left">
+			<div class="text_rotate_left">
+				Desktop
+			</div>
+		</div>
+		<div id="slideout_inner_left">
+			<div>
+				Scan this QR code with your phone to open the trigger picture. 
+			</div>
+			<br>
+			<div>
+				<img
+					src="./assets/qr-codes/example-trigger-picture.png"
+					width="140"
+					height="140"
+					alt="Open trigger picture"
+				>
+			</div>
+			<br>
+			<br>
+			<div>
+				Next, scan the trigger marker on your phone with the webcam on your desktop to view the model.
+			</div>
+			<br>
+			<img
+				src="./assets/images/desktop.png"
+				width="140"
+				alt="Demo"
+			>
+		</div>
+	</div>
+
+	<div id="slideout_right">
+		<div class="tab_right">
+			<div class="text_rotate_right">
+				Mobile
+			</div>
+		</div>
+		<div id="slideout_inner_right">
+			<div>
+				Scan this QR code with your phone to open this demo on your phone. 
+			</div>
+			<br>
+			<div>
+				<img
+					src="./assets/qr-codes/example-website.png"
+					width="140"
+					height="140"
+					alt="Open trigger picture"
+				>
+			</div>
+			<div>
+				<p>Next, open the trigger image by clicking on this <a href="./resources/dataNFT/earth-qr.png">link</a> on your computer.</p>
+				<p>Lastly, scan the trigger picture with camera of your phone.</p>
+			</div>
+			<img
+				src="./assets/images/mobile.png"
+				width="140"
+				alt="Demo"
+			>
+		</div>
+	</div>
+	<h1>NFT marker example with Three.js</h1>
+	<p>On Chrome on Android, tap the screen to start playing video stream.</p>
+	<p>Show  <a href="./resources/dataNFT/earth-qr.png">QR image</a> to camera to display a colorful model.
+
+	<!-- <script type=module src="./index.js" defer></script> -->
+</body>
+</html>

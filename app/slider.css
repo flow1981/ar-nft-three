@@ -1,0 +1,124 @@
+/* Slideout outer button left*/
+#slideout_left {
+    z-index: 1;
+    position: fixed;
+    top: 27px;
+    left: -10px;
+    padding: 0px 8px;
+    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+}
+
+/* Slideout inner widget area left*/
+#slideout_inner_left {
+    position: fixed;
+    top: 27px;
+    left: -300px;
+    width: 240px;
+    height: 515px;
+    color: white;
+    background: #005174;
+    padding: 10px;
+    border-radius: 0px 0px 10px 0px;
+    -webkit-border-radius: 0px 0px 10px 0px;
+    -moz-border-radius: 0px 0px 10px 0px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+/* Hover alignment left*/
+#slideout_left:hover {
+    left: 250px;
+}
+#slideout_left:hover #slideout_inner_left {
+    left: 0;
+}
+
+.tab_left {
+    position: relative;
+    width: 20px;
+    height: 120px;
+    color: white;
+    font-family: "Open Sans";
+    background: #005174;
+    padding: 5px 5px 5px 5px;
+    border-radius: 0 5px 5px 0;
+}
+
+.text_rotate_left {
+    position: absolute;
+    top: 28;
+    left: -13px;
+    text-align: center;
+    transform: rotate(90.0deg);
+    -webkit-transform: rotate(90.0deg);
+    -moz-transform: rotate(90.0deg);
+    -ms-transform: rotate(90.0deg);
+    -o-transform: rotate(90.0deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+/* Slideout outer button left*/
+#slideout_right {
+    z-index: 1;
+    position: fixed;
+    top: 27px;
+    right: -10px;
+    padding: 0px 8px;
+    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+}
+
+/* Slideout inner widget area left*/
+#slideout_inner_right {
+    position: fixed;
+    top: 27px;
+    right: -300px;
+    width: 240px;
+    height: 515px;
+    color: white;
+    background: #005174;
+    padding: 10px;
+    border-radius: 0px 0px 0px 10px;
+    -webkit-border-radius: 0px 0px 0px 10px;
+    -moz-border-radius: 0px 0px 0px 10px;
+    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+}
+/* Hover alignment left*/
+#slideout_right:hover {
+    right: 250px;
+}
+#slideout_right:hover #slideout_inner_right {
+    right: 0;
+}
+
+.tab_right {
+    position: relative;
+    width: 20px;
+    height: 120px;
+    color: white;
+    font-family: "Open Sans";
+    background: #005174;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px 0 0 5px;
+}
+
+.text_rotate_right {
+    position: absolute;
+    top: 83;
+    right: -8px;
+    transform: rotate(-90.0deg);
+    -webkit-transform: rotate(-90.0deg);
+    -moz-transform: rotate(-90.0deg);
+    -ms-transform: rotate(-90.0deg);
+    -o-transform: rotate(-90.0deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-3);
+}
