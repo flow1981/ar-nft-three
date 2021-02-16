@@ -7,6 +7,8 @@ const TLE_SOURCE =  'https://oj63hk6d5a.execute-api.eu-west-3.amazonaws.com/prod
 const NFT_MARKER_URL = './resources/dataNFT/earth-qr'
 const CAMERA_PARAM_URL = './resources/data/camera_para.dat'
 
+const ISS_MODEL_URL = './assets/3dmodels/station-mini.gltf';
+
 const scaleFactor = 1/100
 const earthRadius = 6371
 
@@ -67,7 +69,7 @@ window.AROnLoad = function(tle) {
 		let orbit = visualizeOrbit(issPosition.userData.satrec, scaleFactor)
 		modelGroup.add(orbit)
 
-		addIssModelToMarker(issPosition)
+		addIssModelToMarker(issPosition, ISS_MODEL_URL)
 		alignISSrelativeEarthSurface(issPosition)
 
 		modelGroup.rotateOnAxis( new THREE.Vector3(1, 0, 0).normalize(), 90 * Math.PI/180 );
