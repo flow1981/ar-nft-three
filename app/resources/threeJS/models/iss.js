@@ -9,14 +9,13 @@ export const createIssPositionMarker = () => {
   return mesh
 }
 
-export const addIssModelToMarker = (mesh) => {
+export const addIssModelToMarker = (iss_mesh, model_path) => {
   const gltfLoader = new THREE.GLTFLoader();
-  const url = '../assets/3dmodels/station-mini.gltf';
 
-  return gltfLoader.load(url, (gltf) => {
-    const iss = gltf.scene
-    iss.scale.set(1, 1, 1)
-    iss.name = "station"
-    mesh.add(iss);
+  return gltfLoader.load(model_path, (gltf) => {
+    const iss_model = gltf.scene
+    iss_model.scale.set(1, 1, 1)
+    iss_model.name = "station"
+    iss_mesh.add(iss_model);
   })
 }
