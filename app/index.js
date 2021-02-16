@@ -2,15 +2,15 @@ import { createEarthGnonomic } from './resources/threeJS/models/earth.js'
 import { createIssPositionMarker, addIssModelToMarker } from './resources/threeJS/models/iss.js'
 import { initOrbitalPosition, updateOrbitalPostion, visualizeOrbit, alignXeciToVernalEquinox, alignISSrelativeEarthSurface} from './resources/helper/sat.js'
 
-const NFT_MARKER_URL = '../resources/dataNFT/earth-qr'
-const CAMERA_PARAM_URL = '../resources/data/camera_para.dat'
+const TLE_SOURCE =  'https://oj63hk6d5a.execute-api.eu-west-3.amazonaws.com/production/celetrak-cors-proxy'
 
-const TLE_URL =  'http://live.ariss.org/iss.txt'
+const NFT_MARKER_URL = './resources/dataNFT/earth-qr'
+const CAMERA_PARAM_URL = './resources/data/camera_para.dat'
 
 const scaleFactor = 1/100
 const earthRadius = 6371
 
-window.ARThreeOnLoad = function(tle) {
+window.AROnLoad = function(tle) {
 
 	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: CAMERA_PARAM_URL,
 	onSuccess: function(arScene, arController, arCamera) {
@@ -101,23 +101,10 @@ window.ARThreeOnLoad = function(tle) {
 
 };
 
-//----
-
-//Avoid CORS when fetching TLE data
-$.ajaxPrefilter( function (options) {
-	if (options.crossDomain && jQuery.support.cors) {
-		var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-		options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-	}
-});
-
-//Fetch TLE data before starting the App
-$.get( TLE_URL, function( html ) {
-	const TLE = html.split("\n").splice(0,3);
-	console.log(TLE);
-
-	// Start App if ARController and User Mediaare available
-	if (window.ARController && ARController.getUserMediaThreeScene) {
-		ARThreeOnLoad(TLE);
-	}
-})
+if (window.ARController && ARController.getUserMediaThreeScene) {
+	console.log("test")
+	fetch(TLE_SOURCE)
+		.then(response => response.json())
+		.then(data => data.split("\n").splice(0,3))
+		.then(tle =>  window.AROnLoad(tle))
+}
