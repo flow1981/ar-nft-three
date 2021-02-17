@@ -8,16 +8,12 @@ terraform {
   }
 }
 
-data "local_file" "aws_region" {
-  filename = ".aws-region"
-}
-
 data "aws_route53_zone" "selected" {
   name         = "ar-iss-tracker.info"
 }
 
 provider "aws" {
-  region  = data.local_file.aws_region.content
+  region  = "eu-west-3"
   version = "3.27"
 }
 
